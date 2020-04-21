@@ -10,7 +10,7 @@ library(testthat)
 input_filename <- "cluster_10_dates.fa"
 expect_true(file.exists(input_filename))
 
-dates_filename <- "cluster_10_dates_tmp.csv"
+dates_filename <- "cluster_10_dates.csv"
 expect_true(file.exists(dates_filename))
 
 output_filename <- "output.xml"
