@@ -32,7 +32,7 @@ create_beast2_input_file_from_model(
   input_filename,
   output_filename,
   inference_model = input_model
-}
+)
 
 # The error from BEAST:
 #
