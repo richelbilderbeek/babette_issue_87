@@ -13,6 +13,8 @@ expect_true(file.exists(input_filename))
 dates_filename <- "cluster_10_dates_tmp.csv"
 expect_true(file.exists(dates_filename))
 
+output_filename <- "output.xml"
+
 # Define input model
 mean_sub_rate <- 5.7694E-08
 sd_sub_rate <- (4.0324E-08 - 5.7694E-080) / 2.0
@@ -29,10 +31,14 @@ input_model <- create_inference_model(
 
 # Use the default BEAUti settings to create a BEAST2 input file
 create_beast2_input_file_from_model(
-  input_filename,
-  output_filename = "irrelevant.xml",
+  input_filename = input_filename,
+  output_filename = output_filename,
   inference_model = input_model
 )
+
+is_valid <- beastier::is_beast2_input_file(output_filename, verbose = TRUE)
+
+expect_true(is_valid)
 
 # The error from BEAST:
 #
