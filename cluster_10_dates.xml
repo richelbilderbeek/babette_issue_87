@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><beast beautitemplate='Standard' beautistatus='' namespace="beast.core:beast.evolution.alignment:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood" required="" version="2.4">
+
+
+    <data
+id="cluster_10_dates"
+name="alignment">
+                    <sequence id="seq_2134-20-03-18-L-DNA-MTB-008988-S53-2017-06-22" taxon="2134-20-03-18-L-DNA-MTB-008988-S53-2017-06-22" totalcount="4" value="gcccttcgtcgcgac"/>
+                    <sequence id="seq_4151-13-03-18-L-DNA-MTB-008940-S13-2017-11-09" taxon="4151-13-03-18-L-DNA-MTB-008940-S13-2017-11-09" totalcount="4" value="gacctccggagcaac"/>
+                    <sequence id="seq_4423-13-03-18-L-DNA-MTB-008950-S258-2017-10-10" taxon="4423-13-03-18-L-DNA-MTB-008950-S258-2017-10-10" totalcount="4" value="gcccttcgtcgtgag"/>
+                    <sequence id="seq_L-14-3447-S97-2014-07-11" taxon="L-14-3447-S97-2014-07-11" totalcount="4" value="gaccttcgtaacaac"/>
+                    <sequence id="seq_L-15-1237-S32-2015-06-03" taxon="L-15-1237-S32-2015-06-03" totalcount="4" value="aaccttcgtagcaac"/>
+                    <sequence id="seq_L-16-606-S90-2015-09-28" taxon="L-16-606-S90-2015-09-28" totalcount="4" value="gagtcttttagcaac"/>
+                    <sequence id="seq_T1-XX-2016-726-S164-2016-08-05" taxon="T1-XX-2016-726-S164-2016-08-05" totalcount="4" value="gacctccgtagcacg"/>
+                </data>
+
+
+    
+
+
+    
+
+
+    
+<map name="Uniform" >beast.math.distributions.Uniform</map>
+<map name="Exponential" >beast.math.distributions.Exponential</map>
+<map name="LogNormal" >beast.math.distributions.LogNormalDistributionModel</map>
+<map name="Normal" >beast.math.distributions.Normal</map>
+<map name="Beta" >beast.math.distributions.Beta</map>
+<map name="Gamma" >beast.math.distributions.Gamma</map>
+<map name="LaplaceDistribution" >beast.math.distributions.LaplaceDistribution</map>
+<map name="prior" >beast.math.distributions.Prior</map>
+<map name="InverseGamma" >beast.math.distributions.InverseGamma</map>
+<map name="OneOnX" >beast.math.distributions.OneOnX</map>
+
+
+<run id="mcmc" spec="MCMC" chainLength="100000000" storeEvery="1000">
+    <state id="state" storeEvery="5000">
+        <tree id="Tree.t:cluster_10_dates" name="stateNode">
+            <trait id="dateTrait.t:cluster_10_dates" spec="beast.evolution.tree.TraitSet" traitname="date-forward" value="2134-20-03-18-L-DNA-MTB-008988-S53-2017-06-22=2017,4151-13-03-18-L-DNA-MTB-008940-S13-2017-11-09=2017,4423-13-03-18-L-DNA-MTB-008950-S258-2017-10-10=2017,L-14-3447-S97-2014-07-11=2014,L-15-1237-S32-2015-06-03=2015,L-16-606-S90-2015-09-28=2015,T1-XX-2016-726-S164-2016-08-05=2016">
+                <taxa id="TaxonSet.cluster_10_dates" spec="TaxonSet">
+                    <alignment idref="cluster_10_dates"/>
+                </taxa>
+            </trait>
+            <taxonset idref="TaxonSet.G_VII_pre2003_msa"/>
+        </tree>
+        <parameter id="rateAC.s:cluster_10_dates" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="rateAG.s:cluster_10_dates" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="rateAT.s:cluster_10_dates" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="rateCG.s:cluster_10_dates" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="rateGT.s:cluster_10_dates" lower="0.0" name="stateNode">1.0</parameter>
+        <parameter id="freqParameter.s:cluster_10_dates" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+        <parameter id="clockRate.c:cluster_10_dates" name="stateNode">1.0</parameter>
+        <parameter id="popSize.t:cluster_10_dates" name="stateNode">0.3</parameter>
+    </state>
+
+    <init id="RandomTree.t:cluster_10_dates" spec="beast.evolution.tree.RandomTree" estimate="false" initial="@Tree.t:cluster_10_dates" taxa="@cluster_10_dates">
+        <populationModel id="ConstantPopulation0.t:cluster_10_dates" spec="ConstantPopulation">
+            <parameter id="randomPopSize.t:cluster_10_dates" name="popSize">1.0</parameter>
+        </populationModel>
+    </init>
+
+    <distribution id="posterior" spec="util.CompoundDistribution">
+        <distribution id="prior" spec="util.CompoundDistribution">
+            <distribution id="CoalescentConstant.t:cluster_10_dates" spec="Coalescent">
+                <populationModel id="ConstantPopulation.t:cluster_10_dates" spec="ConstantPopulation" popSize="@popSize.t:cluster_10_dates"/>
+                <treeIntervals id="TreeIntervals.t:cluster_10_dates" spec="TreeIntervals" tree="@Tree.t:cluster_10_dates"/>
+            </distribution>
+            <prior id="PopSizePrior.t:cluster_10_dates" name="distribution" x="@popSize.t:cluster_10_dates">
+                <OneOnX id="OneOnX.100" name="distr"/>
+            </prior>
+            <prior id="RateACPrior.s:cluster_10_dates" name="distribution" x="@rateAC.s:cluster_10_dates">
+                <Gamma id="Gamma.0" name="distr">
+                    <parameter id="RealParameter.0" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.1" estimate="false" name="beta">10.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="RateAGPrior.s:cluster_10_dates" name="distribution" x="@rateAG.s:cluster_10_dates">
+                <Gamma id="Gamma.1" name="distr">
+                    <parameter id="RealParameter.2" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.3" estimate="false" name="beta">20.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="RateATPrior.s:cluster_10_dates" name="distribution" x="@rateAT.s:cluster_10_dates">
+                <Gamma id="Gamma.2" name="distr">
+                    <parameter id="RealParameter.4" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.5" estimate="false" name="beta">10.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="RateCGPrior.s:cluster_10_dates" name="distribution" x="@rateCG.s:cluster_10_dates">
+                <Gamma id="Gamma.3" name="distr">
+                    <parameter id="RealParameter.6" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.7" estimate="false" name="beta">10.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="RateGTPrior.s:cluster_10_dates" name="distribution" x="@rateGT.s:cluster_10_dates">
+                <Gamma id="Gamma.4" name="distr">
+                    <parameter id="RealParameter.8" estimate="false" name="alpha">0.05</parameter>
+                    <parameter id="RealParameter.9" estimate="false" name="beta">10.0</parameter>
+                </Gamma>
+            </prior>
+            <prior id="ClockPrior.c:cluster_10_dates" name="distribution" x="@clockRate.c:cluster_10_dates">
+                <LogNormal id="LogNormalDistributionModel.5" name="distr">
+                    <parameter id="RealParameter.10" estimate="false" name="M">0.000000057694</parameter>
+                    <parameter id="RealParameter.11" estimate="false" lower="0" name="S" upper="Infinity">0.000000020162</parameter>
+                </LogNormal>
+            </prior>
+        </distribution>
+        <distribution id="likelihood" spec="util.CompoundDistribution" useThreads="true">
+            <distribution id="treeLikelihood.cluster_10_dates" spec="ThreadedTreeLikelihood" data="@cluster_10_dates" tree="@Tree.t:cluster_10_dates">
+                <siteModel id="SiteModel.s:cluster_10_dates" spec="SiteModel">
+                    <parameter id="mutationRate.s:cluster_10_dates" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="gammaShape.s:cluster_10_dates" estimate="false" name="shape">1.0</parameter>
+                    <parameter id="proportionInvariant.s:cluster_10_dates" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+                    <substModel id="gtr.s:cluster_10_dates" spec="GTR" rateAC="@rateAC.s:cluster_10_dates" rateAG="@rateAG.s:cluster_10_dates" rateAT="@rateAT.s:cluster_10_dates" rateCG="@rateCG.s:cluster_10_dates" rateGT="@rateGT.s:cluster_10_dates">
+                        <parameter id="rateCT.s:cluster_10_dates" estimate="false" lower="0.0" name="rateCT">1.0</parameter>
+                        <frequencies id="estimatedFreqs.s:cluster_10_dates" spec="Frequencies" frequencies="@freqParameter.s:cluster_10_dates"/>
+                    </substModel>
+                </siteModel>
+                <branchRateModel id="StrictClock.c:cluster_10_dates" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clockRate.c:cluster_10_dates"/>
+            </distribution>
+        </distribution>
+    </distribution>
+
+    <operator id="PopSizeScaler.t:cluster_10_dates" spec="ScaleOperator" parameter="@popSize.t:cluster_10_dates" scaleFactor="0.75" weight="3.0"/>
+
+    <operator id="CoalescentConstantTreeScaler.t:cluster_10_dates" spec="ScaleOperator" scaleFactor="0.5" tree="@Tree.t:cluster_10_dates" weight="3.0"/>
+
+    <operator id="CoalescentConstantTreeRootScaler.t:cluster_10_dates" spec="ScaleOperator" rootOnly="true" scaleFactor="0.5" tree="@Tree.t:cluster_10_dates" weight="3.0"/>
+
+    <operator id="CoalescentConstantUniformOperator.t:cluster_10_dates" spec="Uniform" tree="@Tree.t:cluster_10_dates" weight="30.0"/>
+
+    <operator id="CoalescentConstantSubtreeSlide.t:cluster_10_dates" spec="SubtreeSlide" tree="@Tree.t:cluster_10_dates" weight="15.0"/>
+
+    <operator id="CoalescentConstantNarrow.t:cluster_10_dates" spec="Exchange" tree="@Tree.t:cluster_10_dates" weight="15.0"/>
+
+    <operator id="CoalescentConstantWide.t:cluster_10_dates" spec="Exchange" isNarrow="false" tree="@Tree.t:cluster_10_dates" weight="3.0"/>
+
+    <operator id="CoalescentConstantWilsonBalding.t:cluster_10_dates" spec="WilsonBalding" tree="@Tree.t:cluster_10_dates" weight="3.0"/>
+
+    <operator id="RateACScaler.s:cluster_10_dates" spec="ScaleOperator" parameter="@rateAC.s:cluster_10_dates" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="RateAGScaler.s:cluster_10_dates" spec="ScaleOperator" parameter="@rateAG.s:cluster_10_dates" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="RateATScaler.s:cluster_10_dates" spec="ScaleOperator" parameter="@rateAT.s:cluster_10_dates" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="RateCGScaler.s:cluster_10_dates" spec="ScaleOperator" parameter="@rateCG.s:cluster_10_dates" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="RateGTScaler.s:cluster_10_dates" spec="ScaleOperator" parameter="@rateGT.s:cluster_10_dates" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="FrequenciesExchanger.s:cluster_10_dates" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:cluster_10_dates"/>
+    </operator>
+
+    <operator id="StrictClockRateScaler.c:cluster_10_dates" spec="ScaleOperator" parameter="@clockRate.c:cluster_10_dates" scaleFactor="0.75" weight="3.0"/>
+
+    <operator id="strictClockUpDownOperator.c:cluster_10_dates" spec="UpDownOperator" scaleFactor="0.75" weight="3.0">
+        <up idref="clockRate.c:cluster_10_dates"/>
+        <down idref="Tree.t:cluster_10_dates"/>
+    </operator>
+
+    <logger id="tracelog" fileName="cluster_10_dates.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+        <log idref="treeLikelihood.cluster_10_dates"/>
+        <log id="TreeHeight.t:cluster_10_dates" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:cluster_10_dates"/>
+        <log idref="rateAC.s:cluster_10_dates"/>
+        <log idref="rateAG.s:cluster_10_dates"/>
+        <log idref="rateAT.s:cluster_10_dates"/>
+        <log idref="rateCG.s:cluster_10_dates"/>
+        <log idref="rateGT.s:cluster_10_dates"/>
+        <log idref="freqParameter.s:cluster_10_dates"/>
+        <log idref="popSize.t:cluster_10_dates"/>
+        <log idref="CoalescentConstant.t:cluster_10_dates"/>
+        <log idref="clockRate.c:cluster_10_dates"/>
+    </logger>
+
+    <logger id="screenlog" logEvery="1000">
+        <log idref="posterior"/>
+        <log id="ESS.0" spec="util.ESS" arg="@posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+    </logger>
+
+    <logger id="treelog.t:cluster_10_dates" fileName="$(tree).trees" logEvery="1000" mode="tree">
+        <log id="TreeWithMetaDataLogger.t:cluster_10_dates" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:cluster_10_dates"/>
+    </logger>
+
+</run>
+
+</beast>
