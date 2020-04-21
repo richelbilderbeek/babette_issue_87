@@ -16,15 +16,7 @@ expect_true(file.exists(dates_filename))
 output_filename <- "output.xml"
 
 # Define input model
-mean_sub_rate <- 5.7694E-08
-sd_sub_rate <- (4.0324E-08 - 5.7694E-080) / 2.0
-sd_sub_rate
-
-input_model <- create_inference_model(
-  site_model = create_gtr_site_model(),
-  clock_model = create_clock_model_strict(clock_rate_distr = create_log_normal_distr(m = mean_sub_rate, s = sd_sub_rate)),
-  tree_prior = create_ccp_tree_prior(),
-  mcmc = create_mcmc(chain_length = 1e8, store_every = 1000),
+input_model <- create_test_inference_model(
   tipdates_filename = dates_filename
 )
 
