@@ -3,7 +3,7 @@ dist: bionic
 cache: packages
 
 r_github_packages:
-  - richelbilderbeek/beautier
+  - richelbilderbeek/beautier@develop
   - richelbilderbeek/beastier
   - richelbilderbeek/babette
 
