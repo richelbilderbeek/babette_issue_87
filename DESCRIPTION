@@ -1,0 +1,21 @@
+Package: bi87
+Title: Babette Issue Eighty-Seven
+Version: 1.0
+Authors@R: 
+    person(given = "Richel",
+           family = "Bilderbeek",
+           role = c("aut", "cre"),
+           email = "richel@richelbilderbeek.nl")
+Description:
+    'babette' has an Issue.
+    This Issue has number 87.
+    Here, I reproduce that error.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Imports:
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+

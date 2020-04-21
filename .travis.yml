@@ -1,0 +1,15 @@
+language: r
+dist: bionic
+cache: packages
+
+r_github_packages:
+  - richelbilderbeek/beautier
+  - richelbilderbeek/beastier
+  - richelbilderbeek/babette
+
+before_script:
+  - Rscript -e "beastier::install_beast2()"
+
+script:
+  - Rscript reprex.R
+
